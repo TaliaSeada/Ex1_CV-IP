@@ -8,7 +8,7 @@ LOAD_RGB = 2
 
 class Test(TestCase):
     def test_imReadAndConvert(self):
-        img_path = 'beach.jpg'
+        img_path = '../images/beach.jpg'
         img = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
 
         # check dtype
