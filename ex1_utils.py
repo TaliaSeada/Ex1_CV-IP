@@ -56,7 +56,10 @@ def imDisplay(filename: str, representation: int):
     :param representation: GRAY_SCALE or RGB
     :return: None
     """
-    pass
+    # use the imReadAndConvert function to upload the picture then display it
+    img = imReadAndConvert(filename, representation)
+    plt.imshow(img)
+    plt.show()
 
 
 def transformRGB2YIQ(imgRGB: np.ndarray) -> np.ndarray:
@@ -95,3 +98,9 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         :return: (List[qImage_i],List[error_i])
     """
     pass
+
+if __name__ == '__main__':
+    path = 'images/beach.jpg'
+    img = imReadAndConvert(path, LOAD_RGB)
+    plt.imshow(img)
+    imDisplay(path, LOAD_RGB)
