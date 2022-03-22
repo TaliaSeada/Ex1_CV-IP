@@ -117,7 +117,45 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
         :param imgOrig: Original Histogram
         :ret
     """
-    pass
+
+    if imgOrig is None:
+        print('No image found')
+        pass
+
+    # if an RGB image is given we will use only the Y channel of the corresponding YIQ image
+    flag = 0
+    if imgOrig.ndim == 3:
+        flag = 1
+        imgOrigYIQ = transformRGB2YIQ(imgOrig)
+        imgOrig = imgOrigYIQ[:, :, 0]
+
+    # calculate the image histogram (range = [0, 255])
+    imgOrig = (imgOrig * 255).astype(np.uint8)
+    histOrg, bin_edges = np.histogram(imgOrig, bins=256, range=(0, 255))
+
+    # calculate the normalized Cumulative Sum
+    cumSum = np.cumsum(histOrg)
+
+    # Create a LookUpTable(LUT), such that for each intensity i, LUT[i] = ceiling(CumSum[i] \ allPixels * 255)
+    lut = np.ceil(cumSum / cumSum.max() * 255)
+
+    # Replace each intensity i with LUT[i]
+    imEq = imgOrig.copy()
+    for i in range(256):
+        imEq[imgOrig == i] = int(lut[i])
+
+    # calculate the equalized histogram (range = [0, 255])
+    histEq, bin_edges = np.histogram(imEq, bins=256, range=(0, 255))
+
+    # if we converted the RBG to YIQ, we need to convert it back
+    if flag == 1:
+        # convert back
+        imEq = transformYIQ2RGB(imgOrigYIQ)
+    # else we just renormalize the picture
+    else:
+        imEq = imEq / 255
+
+    return imEq, histOrg, histEq
 
 
 def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):

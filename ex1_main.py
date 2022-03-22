@@ -47,10 +47,10 @@ def quantDemo(img_path: str, rep: int):
 
 def main():
     print("ID:", myID())
-    img_path = 'images/beach.jpg'
+    # img_path = 'images/beach.jpg'
     # img_path = 'images/dog.jpg'
     # img_path = 'images/stich.jpg'
-    # img_path = 'images/bac_con.jpg'
+    img_path = 'images/bac_con.png'
     # img_path = 'images/water_bear.png'
 
     # Basic read and display
@@ -69,12 +69,12 @@ def main():
     histEqDemo(img_path, LOAD_GRAY_SCALE)
     histEqDemo(img_path, LOAD_RGB)
 
-    # Image Quantization
-    quantDemo(img_path, LOAD_GRAY_SCALE)
-    quantDemo(img_path, LOAD_RGB)
-
-    # Gamma
-    gammaDisplay(img_path, LOAD_GRAY_SCALE)
+    # # Image Quantization
+    # quantDemo(img_path, LOAD_GRAY_SCALE)
+    # quantDemo(img_path, LOAD_RGB)
+    #
+    # # Gamma
+    # gammaDisplay(img_path, LOAD_GRAY_SCALE)
 
 
 if __name__ == '__main__':
