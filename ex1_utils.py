@@ -14,6 +14,7 @@ from typing import List
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+
 LOAD_GRAY_SCALE = 1
 LOAD_RGB = 2
 
@@ -37,16 +38,14 @@ def imReadAndConvert(filename: str, representation: int) -> np.ndarray:
     # if the representation is given as 1, meaning Gray Scale we will convert the img from BGR to GRAY
     if representation == 1:
         img_rep = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # if the representation is given as 2, meaning Gray Scale we will convert the img from BGR to RGB
-    elif representation == 2:
-        img_rep = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    # else we will return the img as is
+        plt.gray()
+    # else if the representation is given as 2, meaning RGB we will convert the img from BGR to RGB
     else:
-        img_rep = img
-    # finally we will normalize the picture to be in the range [0,1]
-    img_rep = img_rep/255
-    return img_rep
+        img_rep = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+    # finally we will normalize the picture to be in the range [0,1]
+    img_rep = img_rep / 255
+    return img_rep
 
 
 def imDisplay(filename: str, representation: int):
@@ -68,7 +67,14 @@ def transformRGB2YIQ(imgRGB: np.ndarray) -> np.ndarray:
     :param imgRGB: An Image in RGB
     :return: A YIQ in image color space
     """
-    pass
+    # set the matrix
+    mult = np.array([[0.299, 0.587, 0.114],
+                     [0.596, -0.275, -0.321],
+                     [0.212, -0.523, 0.311]])
+    # multiply every pixel in order to transpose to YIQ
+    YIQ = imgRGB.dot(mult)
+    # then return the new image
+    return YIQ
 
 
 def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
@@ -77,7 +83,15 @@ def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
     :param imgYIQ: An Image in YIQ
     :return: A RGB in image color space
     """
-    pass
+    # set the inverse matrix using numpy
+    mult = np.array([[0.299, 0.587, 0.114],
+                     [0.596, -0.275, -0.321],
+                     [0.212, -0.523, 0.311]])
+    mult = np.linalg.inv(mult)
+    # multiply every pixel in order to transpose to RGB
+    RGB = imgYIQ.dot(mult)
+    # then return the new image
+    return RGB
 
 
 def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
@@ -99,8 +113,23 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
     """
     pass
 
+
 if __name__ == '__main__':
     path = 'images/beach.jpg'
     img = imReadAndConvert(path, LOAD_RGB)
+    # plt.imshow(img)
+    # imDisplay(path, LOAD_RGB)
+    img = transformRGB2YIQ(img)
+    # plt.imshow(img)
+    img = transformYIQ2RGB(img)
     plt.imshow(img)
-    imDisplay(path, LOAD_RGB)
+
+
+
+
+
+
+
+
+
+    plt.show()

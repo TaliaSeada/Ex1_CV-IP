@@ -8,7 +8,7 @@ LOAD_RGB = 2
 
 class Test(TestCase):
     def test_imReadAndConvert_scales(self):
-        img_path = '../images/beach.jpg'
+        img_path = '../images/dog.jpg'
         img_gray = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
         img_rgb = imReadAndConvert(img_path, LOAD_RGB)
 
@@ -17,7 +17,7 @@ class Test(TestCase):
         self.assertEqual(len(img_rgb.shape), 3)
 
     def test_imReadAndConvert(self):
-        img_path = '../images/beach.jpg'
+        img_path = '../images/dog.jpg'
         img = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
 
         # check type
@@ -31,10 +31,10 @@ class Test(TestCase):
                 self.assertTrue(img[i][j] >= 0)
 
     def test_imDisplay_Gray(self):
-        img_path = '../images/beach.jpg'
+        img_path = '../images/dog.jpg'
         imDisplay(img_path, 1) # Gray image
 
     def test_imDisplay_RGB(self):
-        img_path = '../images/beach.jpg'
+        img_path = '../images/tesla.jpg'
         imDisplay(img_path, 2) # RGB image
 
