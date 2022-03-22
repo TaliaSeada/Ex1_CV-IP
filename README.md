@@ -1,5 +1,5 @@
 # Ex1_ImageVision
-The main purpose of this exercise is to get you acquainted with Python’s basic syntax and some of its image processing facilities. </br>
+Python’s basic syntax and some of its image processing facilities. </br>
 This exercise covers:
 
 1. Loading grayscale and RGB image representations. 
