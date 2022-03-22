@@ -5,6 +5,11 @@ from ex1_utils import imReadAndConvert, imDisplay
 LOAD_GRAY_SCALE = 1
 LOAD_RGB = 2
 
+# img_path = 'images/dog.jpg'
+# img_path = 'images/stich.jpg'
+# img_path = 'images/bac_con.jpg'
+# img_path = 'images/beach.jpg'
+# img_path = 'images/water_bear.png'
 
 class Test(TestCase):
     def test_imReadAndConvert_scales(self):
@@ -35,6 +40,8 @@ class Test(TestCase):
         imDisplay(img_path, 1) # Gray image
 
     def test_imDisplay_RGB(self):
-        img_path = '../images/tesla.jpg'
+        img_path = '../images/stich.jpg'
         imDisplay(img_path, 2) # RGB image
+
+
 

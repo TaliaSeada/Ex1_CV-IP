@@ -34,6 +34,11 @@ def imReadAndConvert(filename: str, representation: int) -> np.ndarray:
     :param representation: GRAY_SCALE or RGB
     :return: The image object
     """
+
+    # Checking that representation is 1 or 2
+    if representation != 1 and representation != 2:
+        print("pleas choose 1 for GRAY_SCALE or 2 for RGB")
+        pass
     img = cv2.imread(filename)
     # if the representation is given as 1, meaning Gray Scale we will convert the img from BGR to GRAY
     if representation == 1:
@@ -55,6 +60,10 @@ def imDisplay(filename: str, representation: int):
     :param representation: GRAY_SCALE or RGB
     :return: None
     """
+
+    if filename is None:
+        print('filename is None')
+        pass
     # use the imReadAndConvert function to upload the picture then display it
     img = imReadAndConvert(filename, representation)
     plt.imshow(img)
@@ -67,6 +76,10 @@ def transformRGB2YIQ(imgRGB: np.ndarray) -> np.ndarray:
     :param imgRGB: An Image in RGB
     :return: A YIQ in image color space
     """
+
+    if imgRGB is None:
+        print('No image found')
+        pass
     # set the matrix
     mult = np.array([[0.299, 0.587, 0.114],
                      [0.596, -0.275, -0.321],
@@ -83,6 +96,10 @@ def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
     :param imgYIQ: An Image in YIQ
     :return: A RGB in image color space
     """
+
+    if imgYIQ is None:
+        print('No image found')
+        pass
     # set the inverse matrix using numpy
     mult = np.array([[0.299, 0.587, 0.114],
                      [0.596, -0.275, -0.321],
@@ -115,14 +132,23 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
 
 
 if __name__ == '__main__':
-    path = 'images/beach.jpg'
-    img = imReadAndConvert(path, LOAD_RGB)
-    # plt.imshow(img)
-    # imDisplay(path, LOAD_RGB)
-    img = transformRGB2YIQ(img)
-    # plt.imshow(img)
-    img = transformYIQ2RGB(img)
-    plt.imshow(img)
+    # img_path = 'images/dog.jpg'
+    img_path = 'images/stich.jpg'
+    # img_path = 'images/bac_con.jpg'
+    # img_path = 'images/beach.jpg'
+    # img_path = 'images/water_bear.png'
+
+    # Basic read and display
+    imDisplay(img_path, LOAD_GRAY_SCALE)
+    imDisplay(img_path, LOAD_RGB)
+
+    # Convert Color spaces
+    img = imReadAndConvert(img_path, LOAD_RGB)
+    yiq_img = transformRGB2YIQ(img)
+    f, ax = plt.subplots(1, 2)
+    ax[0].imshow(img)
+    ax[1].imshow(yiq_img)
+    plt.show()
 
 
 
