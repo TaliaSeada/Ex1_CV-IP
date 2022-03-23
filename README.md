@@ -1,4 +1,9 @@
 # Ex1_ImageVision
+* Python version: 3.9.5 </br>
+* Platform: PyCharm </br>
+
+
+
 Python’s basic syntax and some of its image processing facilities. </br>
 This exercise covers:
 
