@@ -1,5 +1,9 @@
 from unittest import TestCase
 
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+
 from ex1_utils import imReadAndConvert, imDisplay
 
 LOAD_GRAY_SCALE = 1
@@ -39,9 +43,18 @@ class Test(TestCase):
         img_path = '../images/dog.jpg'
         imDisplay(img_path, 1) # Gray image
 
+        img = cv2.imread(img_path)
+        plt.hist(img.ravel(), 256, [0, 256])
+        plt.show()
+
     def test_imDisplay_RGB(self):
         img_path = '../images/stich.jpg'
         imDisplay(img_path, 2) # RGB image
 
-
-
+        img = cv2.imread(img_path)
+        color = ('b', 'g', 'r')
+        for i, col in enumerate(color):
+            histr = cv2.calcHist([img], [i], None, [256], [0, 256])
+            plt.plot(histr, color=col)
+            plt.xlim([0, 256])
+        plt.show()

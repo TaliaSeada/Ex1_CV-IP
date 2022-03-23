@@ -8,9 +8,7 @@
          ########: ##:::. ##::'######:
         ........::..:::::..:::......::
 """
-from itertools import repeat
 from typing import List
-
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -151,7 +149,7 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
     if flag == 1:
         # convert back
         imEq = transformYIQ2RGB(imgOrigYIQ)
-    # else we just renormalize the picture
+    # else we just normalize again the picture
     else:
         imEq = imEq / 255
 
@@ -166,34 +164,83 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
         :param nIter: Number of optimization loops
         :return: (List[qImage_i],List[error_i])
     """
-    pass
+
+    if imOrig is None:
+        print('No image found')
+        pass
+
+    # if an RGB image is given we will use only the Y channel of the corresponding YIQ image
+    flag = 0
+    if imOrig.ndim == 3:
+        flag = 1
+        imgOrigYIQ = transformRGB2YIQ(imOrig)
+        imOrig = imgOrigYIQ[:, :, 0]
+
+    # send to quantization
+    images, error = _QuanMain(imOrig, nQuant, nIter)
+
+    # if we converted the RBG to YIQ, we need to convert it back for each image
+    if flag == 1:
+        for i in range(len(images)):
+            imgOrigYIQ[:, :, 0] = images[i] / 255
+            images[i] = transformYIQ2RGB(imgOrigYIQ)
+
+    return images, error
 
 
-if __name__ == '__main__':
-    # img_path = 'images/dog.jpg'
-    img_path = 'images/stich.jpg'
-    # img_path = 'images/bac_con.jpg'
-    # img_path = 'images/beach.jpg'
-    # img_path = 'images/water_bear.png'
+def _QuanMain(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray], List[float]):
+    # Each iteration in the quantization process contains two steps:
+    #  • Finding z - the borders which divide the histograms into segments.
+    #   z is a vector containing nQuant + 1 elements.The first and last elements are 0 and 255 respectively.
+    #  • Finding q - the values that each of the segments' intensities will map to. q is also a vector,
+    #   however, containing nQuant elements.
 
-    # Basic read and display
-    imDisplay(img_path, LOAD_GRAY_SCALE)
-    imDisplay(img_path, LOAD_RGB)
+    images = []
+    error = []  # nIter elements (or less in case of converges)
+    # set z (borders)
+    z = []
+    for i in range(nQuant + 1):
+        # in order to know where the boundaries need to be, we will calculate by (255/nQuant)*i:
+        # i is the num of border we placing
+        # first boundary is at 0 and last boundary is at 255
+        z.append(int((255 / nQuant) * i))
 
-    # Convert Color spaces
-    img = imReadAndConvert(img_path, LOAD_RGB)
-    yiq_img = transformRGB2YIQ(img)
-    f, ax = plt.subplots(1, 2)
-    ax[0].imshow(img)
-    ax[1].imshow(yiq_img)
-    plt.show()
+    # getting the histogram
+    imflat = (imOrig.flatten() * 255).astype(int)
+    hist, bin_edges = np.histogram(imflat, bins=256)
 
+    # perform the two steps above nIter times
+    for i in range(nIter):
+        # create the new image
+        newImg = np.zeros_like(imOrig)
+        # create list of the weighted means
+        means = []
 
+        # calculate the average of each part
+        for j in range(nQuant):
+            p_z_i = hist[z[j]:z[j + 1]]
+            z_i = np.array(range(z[j], z[j + 1]))
+            weightedAvg = (z_i * p_z_i).sum() / p_z_i.sum()
+            # add to list
+            means.append(weightedAvg)
 
+        # now change the intensity of the image
+        for m in range(len(means)):
+            # for each boundary change the pixels in it to the new color (the mean we calculated for each boundary)
+            newImg[imOrig > z[m] / 255] = means[m]
 
+        # improve boundaries, without changing the first and last ones
+        # using z_i = (q_i + q_i+1) / 2
+        for b in range(1, len(z) - 1):
+            z[b] = int((means[b - 1] + means[b]) / 2)
 
+        # calculate MSE
+        mse = np.sqrt((imOrig * 255 - newImg) ** 2).mean()
+        error.append(mse)
+        plt.plot(error)
 
+        # finally add the new image to the list
+        images.append(newImg)
 
+    return images, error
 
-
-    plt.show()
