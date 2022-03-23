@@ -125,7 +125,8 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
     if imgOrig.ndim == 3:
         flag = 1
         imgOrigYIQ = transformRGB2YIQ(imgOrig)
-        imgOrig = imgOrigYIQ[:, :, 0]
+        y = imgOrigYIQ[:, :, 0]
+        imgOrig = y
 
     # calculate the image histogram (range = [0, 255])
     imgOrig = (imgOrig * 255).astype(np.uint8)
@@ -148,6 +149,7 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
     # if we converted the RBG to YIQ, we need to convert it back
     if flag == 1:
         # convert back
+        imgOrigYIQ[:, :, 0] = imEq / 255
         imEq = transformYIQ2RGB(imgOrigYIQ)
     # else we just normalize again the picture
     else:
@@ -237,10 +239,11 @@ def _QuanMain(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray],
         # calculate MSE
         mse = np.sqrt((imOrig * 255 - newImg) ** 2).mean()
         error.append(mse)
-        plt.plot(error)
 
         # finally add the new image to the list
         images.append(newImg)
 
+    # plt.plot(error)
+    # plt.show()
     return images, error
 
