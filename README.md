@@ -12,7 +12,7 @@
 7. test_ex1_utils.py
 
 ### Descriptions and Functions:
-1. __ex1_utils.py__ - In this file  
+1. __ex1_utils.py__ - In this file  HERE!
 
 Python’s basic syntax and some of its image processing facilities. </br>
 This exercise covers:</br>
