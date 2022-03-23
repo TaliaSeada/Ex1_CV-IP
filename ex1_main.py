@@ -48,8 +48,8 @@ def quantDemo(img_path: str, rep: int):
 def main():
     print("ID:", myID())
     img_path = 'images/beach.jpg'
-    # img_path = 'images/dog.jpg'
-    # img_path = 'images/stich.jpg'
+    # img_path = 'images/testImg1.jpg'
+    # img_path = 'images/testImg2.jpg'
     # img_path = 'images/bac_con.png'
     # img_path = 'images/water_bear.png'
 

@@ -9,15 +9,15 @@ from ex1_utils import imReadAndConvert, imDisplay
 LOAD_GRAY_SCALE = 1
 LOAD_RGB = 2
 
-# img_path = 'images/dog.jpg'
-# img_path = 'images/stich.jpg'
+# img_path = 'images/testImg1.jpg'
+# img_path = 'images/testImg2.jpg'
 # img_path = 'images/bac_con.jpg'
 # img_path = 'images/beach.jpg'
 # img_path = 'images/water_bear.png'
 
 class Test(TestCase):
     def test_imReadAndConvert_scales(self):
-        img_path = '../images/dog.jpg'
+        img_path = '../testImg1.jpg'
         img_gray = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
         img_rgb = imReadAndConvert(img_path, LOAD_RGB)
 
@@ -26,7 +26,7 @@ class Test(TestCase):
         self.assertEqual(len(img_rgb.shape), 3)
 
     def test_imReadAndConvert(self):
-        img_path = '../images/dog.jpg'
+        img_path = '../testImg1.jpg'
         img = imReadAndConvert(img_path, LOAD_GRAY_SCALE)
 
         # check type
@@ -40,7 +40,7 @@ class Test(TestCase):
                 self.assertTrue(img[i][j] >= 0)
 
     def test_imDisplay_Gray(self):
-        img_path = '../images/dog.jpg'
+        img_path = '../testImg1.jpg'
         imDisplay(img_path, 1) # Gray image
 
         img = cv2.imread(img_path)
@@ -48,7 +48,7 @@ class Test(TestCase):
         plt.show()
 
     def test_imDisplay_RGB(self):
-        img_path = '../images/stich.jpg'
+        img_path = '../testImg2.jpg'
         imDisplay(img_path, 2) # RGB image
 
         img = cv2.imread(img_path)

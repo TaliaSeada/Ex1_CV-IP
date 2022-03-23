@@ -31,6 +31,7 @@ RGB: </br>
 <b> Quantization </b>  is the process of constraining an input from a continuous or otherwise large set of values (such as the real numbers) to a discrete set (such as the integers). - 
 https://en.wikipedia.org/wiki/Quantization <br/>
 Gray Scale: </br>
+
 ![image](https://user-images.githubusercontent.com/78349342/159689796-cdab485b-061f-42dd-a9c7-def7a5cb78eb.png) </br>
 RGB: </br>
 ![image](https://user-images.githubusercontent.com/78349342/159690250-fa87598d-afc9-46b6-8a3d-4eaa85816d08.png)
