@@ -9,7 +9,7 @@ This exercise covers:
 5. Performing optimal quantization
 
 ### Loading grayscale and RGB image representations and Displaying figures and images:
-![image](https://user-images.githubusercontent.com/78349342/159686302-257d7517-5ca8-44fb-a722-d646e0a8733e.png)
+![image](https://user-images.githubusercontent.com/78349342/159690913-d0daf730-badd-47de-a1eb-a6178a1b31f7.png)
 
 ### Transforming RGB color images back and forth from the YIQ color space:
 ![image](https://user-images.githubusercontent.com/78349342/159686790-e9acff83-1d6f-47e8-a63c-88e093720922.png)
