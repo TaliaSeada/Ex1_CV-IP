@@ -2,11 +2,20 @@
 * Python version: 3.9.5 </br>
 * Platform: PyCharm </br>
 
+### Submission files:
+1. ex1_utils.py
+2. ex1_main.py
+3. gamma.py
+4. testImg1.jpg
+5. testImg2.jpg
+6. README.md
+7. test_ex1_utils.py
 
+### Descriptions and Functions:
+1. __ex1_utils.py__ - In this file  
 
 Python’s basic syntax and some of its image processing facilities. </br>
-This exercise covers:
-
+This exercise covers:</br>
 1. Loading grayscale and RGB image representations. 
 2. Displaying figures and images.
 3. Transforming RGB color images back and forth from the YIQ color space.
