@@ -20,9 +20,9 @@
 &emsp;~ quantizeImage - performs optimal quantization of a given grayscale or RGB image.</br>
 &emsp;~ _QuanMain - help function that responsible to the main quantization </br>
 
-2. __gamma.py__ - In this file represent the GUI for gamma correction.
-&emsp;~ gammaDisplay - performs gamma correction on an image with a given gamma.
-&emsp;~ on_trackbar - follows the values of the trackbar we built.
+2. __gamma.py__ - In this file represent the GUI for gamma correction.</br>
+&emsp;~ gammaDisplay - performs gamma correction on an image with a given gamma.</br>
+&emsp;~ on_trackbar - follows the values of the trackbar we built.</br>
 
 # Python’s basic syntax and some of its image processing facilities. </br>
 This exercise covers:</br>
