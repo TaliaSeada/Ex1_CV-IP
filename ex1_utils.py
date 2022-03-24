@@ -35,8 +35,8 @@ def imReadAndConvert(filename: str, representation: int) -> np.ndarray:
 
     # Checking that representation is 1 or 2
     if representation != 1 and representation != 2:
-        print("pleas choose 1 for GRAY_SCALE or 2 for RGB")
-        pass
+        print("Insert only 1 for GRAY_SCALE or 2 for RGB")
+        exit(0)
     img = cv2.imread(filename)
     # if the representation is given as 1, meaning Gray Scale we will convert the img from BGR to GRAY
     if representation == 1:
@@ -60,8 +60,8 @@ def imDisplay(filename: str, representation: int):
     """
 
     if filename is None:
-        print('filename is None')
-        pass
+        print('Could not open or find the file:', filename)
+        exit(0)
     # use the imReadAndConvert function to upload the picture then display it
     img = imReadAndConvert(filename, representation)
     plt.imshow(img)
@@ -76,8 +76,8 @@ def transformRGB2YIQ(imgRGB: np.ndarray) -> np.ndarray:
     """
 
     if imgRGB is None:
-        print('No image found')
-        pass
+        print('Could not open or find the image:', imgRGB)
+        exit(0)
     # set the matrix
     mult = np.array([[0.299, 0.587, 0.114],
                      [0.596, -0.275, -0.321],
@@ -96,8 +96,8 @@ def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
     """
 
     if imgYIQ is None:
-        print('No image found')
-        pass
+        print('Could not open or find the image:', imgYIQ)
+        exit(0)
     # set the inverse matrix using numpy
     mult = np.array([[0.299, 0.587, 0.114],
                      [0.596, -0.275, -0.321],
@@ -118,15 +118,14 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
 
     if imgOrig is None:
         print('No image found')
-        pass
+        exit(0)
 
     # if an RGB image is given we will use only the Y channel of the corresponding YIQ image
     flag = 0
     if imgOrig.ndim == 3:
         flag = 1
         imgOrigYIQ = transformRGB2YIQ(imgOrig)
-        y = imgOrigYIQ[:, :, 0]
-        imgOrig = y
+        imgOrig = imgOrigYIQ[:, :, 0]
 
     # calculate the image histogram (range = [0, 255])
     imgOrig = (imgOrig * 255).astype(np.uint8)
@@ -168,8 +167,8 @@ def quantizeImage(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarr
     """
 
     if imOrig is None:
-        print('No image found')
-        pass
+        print('Could not open or find the image:', imOrig)
+        exit(0)
 
     # if an RGB image is given we will use only the Y channel of the corresponding YIQ image
     flag = 0
