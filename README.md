@@ -42,9 +42,9 @@ This exercise covers:</br>
 <b> Histogram equalization </b> is a method in image processing of contrast adjustment using the image's histogram. - https://en.wikipedia.org/wiki/Histogram_equalization <br/>
   
 Gray Scale: </br>
-![image](https://user-images.githubusercontent.com/78349342/159687764-f7618bde-26b0-46fa-9351-f737fa0e694f.png) </br>
+![image](https://user-images.githubusercontent.com/78349342/160292996-bbd98a48-7bda-47e1-aeee-7dca93bcf301.png) </br>
 RGB: </br>
-![image](https://user-images.githubusercontent.com/78349342/159688213-4568614b-d8c4-4b55-98e8-59b000adf73d.png) </br>
+![image](https://user-images.githubusercontent.com/78349342/160292897-8861d9ee-e560-4caf-8f0e-f55224e2333b.png) </br>
 
 ### Performing optimal quantization:
 <b> Quantization </b>  is the process of constraining an input from a continuous or otherwise large set of values (such as the real numbers) to a discrete set (such as the integers). - 
