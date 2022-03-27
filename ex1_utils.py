@@ -117,7 +117,7 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
     """
 
     if imgOrig is None:
-        print('No image found')
+        print('Could not open or find the image:', imgOrig)
         exit(0)
 
     # if an RGB image is given we will use only the Y channel of the corresponding YIQ image
@@ -128,14 +128,14 @@ def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarra
         imgOrig = imgOrigYIQ[:, :, 0]
 
     # calculate the image histogram (range = [0, 255])
-    imgOrig = (imgOrig * 255).astype(np.uint8)
+    imgOrig = (imgOrig * 255).astype(int)
     histOrg, bin_edges = np.histogram(imgOrig, bins=256, range=(0, 255))
-
     # calculate the normalized Cumulative Sum
     cumSum = np.cumsum(histOrg)
+    allPixels = cumSum.max()
 
-    # Create a LookUpTable(LUT), such that for each intensity i, LUT[i] = ceiling(CumSum[i] \ allPixels * 255)
-    lut = np.ceil(cumSum / cumSum.max() * 255)
+    # Create a LookUpTable(LUT), such that for each intensity i, LUT[i] = ceiling(CumSum[i] / allPixels * 255)
+    lut = np.ceil((cumSum / allPixels) * 255)
 
     # Replace each intensity i with LUT[i]
     imEq = imgOrig.copy()
@@ -245,4 +245,3 @@ def _QuanMain(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray],
     # plt.plot(error)
     # plt.show()
     return images, error
-
