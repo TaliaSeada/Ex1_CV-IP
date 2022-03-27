@@ -8,6 +8,7 @@
          ########: ##:::. ##::'######:
         ........::..:::::..:::......::
 """
+# git of this project - https://github.com/TaliaSeada/Ex1_ComputerVisionAndImageProcessing
 from typing import List
 import numpy as np
 import cv2
