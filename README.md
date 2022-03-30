@@ -51,9 +51,9 @@ RGB: </br>
 https://en.wikipedia.org/wiki/Quantization <br/>
 Gray Scale: </br>
 
-![image](https://user-images.githubusercontent.com/78349342/159689796-cdab485b-061f-42dd-a9c7-def7a5cb78eb.png) </br>
+![image](https://user-images.githubusercontent.com/78349342/160888434-f05225b2-1ac1-48dd-99d6-0d8f52ff0ccb.png) </br>
 RGB: </br>
-![image](https://user-images.githubusercontent.com/78349342/159690250-fa87598d-afc9-46b6-8a3d-4eaa85816d08.png)
+![image](https://user-images.githubusercontent.com/78349342/160888938-c089f479-68f9-45e1-8b35-2cab87de412f.png)
 
 ### Gamma correction:
 1. https://en.wikipedia.org/wiki/Gamma_correction
