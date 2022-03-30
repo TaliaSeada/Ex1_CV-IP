@@ -84,7 +84,7 @@ def transformRGB2YIQ(imgRGB: np.ndarray) -> np.ndarray:
                      [0.596, -0.275, -0.321],
                      [0.212, -0.523, 0.311]])
     # multiply every pixel in order to transpose to YIQ
-    YIQ = imgRGB.dot(mult)
+    YIQ = imgRGB.dot(mult.T)
     # then return the new image
     return YIQ
 
@@ -105,10 +105,9 @@ def transformYIQ2RGB(imgYIQ: np.ndarray) -> np.ndarray:
                      [0.212, -0.523, 0.311]])
     mult = np.linalg.inv(mult)
     # multiply every pixel in order to transpose to RGB
-    RGB = imgYIQ.dot(mult)
+    RGB = imgYIQ.dot(mult.T)
     # then return the new image
     return RGB
-
 
 def hsitogramEqualize(imgOrig: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
     """
@@ -199,17 +198,27 @@ def _QuanMain(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray],
 
     images = []
     error = []  # nIter elements (or less in case of converges)
-    # set z (borders)
-    z = []
-    for i in range(nQuant + 1):
-        # in order to know where the boundaries need to be, we will calculate by (255/nQuant)*i:
-        # i is the num of border we placing
-        # first boundary is at 0 and last boundary is at 255
-        z.append(int((255 / nQuant) * i))
 
-    # getting the histogram
+    # getting the histogram and cumsum
     imflat = (imOrig.flatten() * 255).astype(int)
     hist, bin_edges = np.histogram(imflat, bins=256)
+    cumsum = np.cumsum(hist)
+    allpix = cumsum.max()
+
+    # set z (borders)
+    z = []
+    z.append(0)
+    b = allpix / nQuant
+    for i in range(1, nQuant+1):
+        # in order to know where the boundaries need to be, we will calculate by the number of pixels we have:
+        # first boundary is at 0 and last boundary is at 255
+        j = 0
+        for j in range(256):
+            if cumsum[j]/i < b:
+                continue
+            else:
+                break
+        z.append(j)
 
     # perform the two steps above nIter times
     for i in range(nIter):
@@ -246,3 +255,4 @@ def _QuanMain(imOrig: np.ndarray, nQuant: int, nIter: int) -> (List[np.ndarray],
     # plt.plot(error)
     # plt.show()
     return images, error
+
